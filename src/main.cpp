@@ -156,11 +156,15 @@ void drawNetworkDetails() {
     };
 
     for (uint8_t index = 0; index < 5; ++index) {
-        const int16_t y = 68 + index * 27;
+        const int16_t y = 64 + index * 20;
         drawText(labels[index], 14, y, Colors::GRAY);
         drawText(values[index], 92, y, Colors::WHITE);
         tft.drawFastHLine(12, y + 16, 296, Colors::PANEL);
     }
+
+    const char *action = connected ? "DISCONNECT" : hasWifiCredentials() ? "CONNECT" : "SETUP";
+    tft.drawRoundRect(188, 177, 122, 27, 4, connected ? Colors::RED : Colors::ACCENT);
+    drawText(action, 214, 186, connected ? Colors::RED : Colors::ACCENT);
 }
 
 void drawSetup() {
@@ -689,6 +693,17 @@ void handleTap(int16_t x, int16_t y) {
         }
     } else if (currentScreen == Screen::SCAN && x >= 250 && y < 70) {
         startWifiScan();
+    } else if (currentScreen == Screen::DETAILS && y >= 177 && y <= 207 && x >= 188) {
+        if (WiFi.status() == WL_CONNECTED) {
+            WiFi.setAutoReconnect(false);
+            WiFi.disconnect(false, false);
+        } else if (hasWifiCredentials()) {
+            WiFi.setAutoReconnect(true);
+            WiFi.begin(wifiSsid.c_str(), wifiPassword.c_str());
+        } else {
+            startSetupPortal();
+        }
+        needsRedraw = true;
     } else if (currentScreen == Screen::TOOLS && y >= 62 && y <= 94) {
         if (x < 160) {
             beginToolInput(ToolInput::DNS);
