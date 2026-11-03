@@ -83,7 +83,3 @@ Currently designed specifically for the:
 **ESP32-2432S028 Cheap Yellow Display (CYD)**
 
 Other ESP32 development boards are not officially supported.
-
----
-
-*Cerbsys NetTools — Network diagnostics, wherever you go.*
