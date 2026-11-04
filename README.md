@@ -38,10 +38,13 @@ Test connectivity to network hosts and measure response times.
 Test HTTP connectivity to websites and network services.
 
 ### Port Scanner
-Scan target hosts for accessible network ports.
+Scan target hosts for accessible network ports and service information.
 
 ### Traceroute
 Trace the network path between the device and a destination host.
+
+### LAN Discovery
+Find all devices that are connected to your LAN.
 
 ### Requirements
 
